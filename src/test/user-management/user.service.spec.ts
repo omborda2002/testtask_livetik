@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from 'src/user-management/application/services/user.service';
 
+import { UserService } from 'src/user-management/application/services/user.service';
 import { InMemoryUserRepository } from 'src/user-management/infrastructure/adapters/in-memory-user.repository';
 
 describe('UserService', () => {

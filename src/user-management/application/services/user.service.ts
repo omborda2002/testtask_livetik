@@ -1,12 +1,14 @@
 import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
+
+import { ClientKafka } from '@nestjs/microservices';
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../../domain/entities/user.entity';
-import { UserRepositoryPort } from '../../domain/ports/user-repository.port';
+
 import { LoginUserDto } from '../dto/login-user.dto';
+import { User } from '../../domain/entities/user.entity';
 import { RegisterUserDto } from '../dto/register-user.dto';
 import { ChangePasswordDto } from '../dto/change-password.dto';
-import { ClientKafka } from '@nestjs/microservices';
+import { UserRepositoryPort } from '../../domain/ports/user-repository.port';
 
 @Injectable()
 export class UserService {

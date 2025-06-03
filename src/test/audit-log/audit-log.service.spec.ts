@@ -1,4 +1,4 @@
-import { AuditLogService } from '../../../src/audit-log/audit-log.service';
+import { AuditLogService } from 'src/audit-log/audit-log.service';
 
 describe('AuditLogService', () => {
   let service: AuditLogService;

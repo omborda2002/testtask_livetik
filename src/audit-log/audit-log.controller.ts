@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
+
 import { AuditLogService } from './audit-log.service';
 
 interface PasswordChangedEvent {

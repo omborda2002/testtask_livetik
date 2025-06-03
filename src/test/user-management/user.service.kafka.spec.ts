@@ -1,10 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from '../../../src/user-management/application/services/user.service';
-import { InMemoryUserRepository } from '../../../src/user-management/infrastructure/adapters/in-memory-user.repository';
-import { ChangePasswordDto } from '../../../src/user-management/application/dto/change-password.dto';
+
 import * as bcrypt from 'bcrypt';
-import { User } from '../../../src/user-management/domain/entities/user.entity';
 import { v4 as uuidv4 } from 'uuid';
+
+import { ChangePasswordDto } from 'src/user-management/application/dto/change-password.dto';
+import { UserService } from 'src/user-management/application/services/user.service';
+import { User } from 'src/user-management/domain/entities/user.entity';
+import { InMemoryUserRepository } from 'src/user-management/infrastructure/adapters/in-memory-user.repository';
 
 describe('UserService Kafka', () => {
   let service: UserService;

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
 import { UserService } from './application/services/user.service';
 import { UserController } from './interfaces/controllers/user.controller';
 import { InMemoryUserRepository } from './infrastructure/adapters/in-memory-user.repository';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
