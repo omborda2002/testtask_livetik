@@ -1,10 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from '../../user-management/application/services/user.service';
-// import { UserRepositoryPort } from '../../src/user-management/domain/ports/user-repository.port';
-import { InMemoryUserRepository } from '../../user-management/infrastructure/adapters/in-memory-user.repository';
+import { UserService } from 'src/user-management/application/services/user.service';
+
+import { InMemoryUserRepository } from 'src/user-management/infrastructure/adapters/in-memory-user.repository';
 
 describe('UserService', () => {
   let service: UserService;
+
+  const mockKafkaClient = {
+    emit: jest.fn(),
+    connect: jest.fn(),
+    subscribeToResponseOf: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -13,6 +19,10 @@ describe('UserService', () => {
         {
           provide: 'UserRepositoryPort',
           useClass: InMemoryUserRepository,
+        },
+        {
+          provide: 'KAFKA_CLIENT',
+          useValue: mockKafkaClient,
         },
       ],
     }).compile();

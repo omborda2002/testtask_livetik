@@ -96,3 +96,24 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+---
+
+docker-compose up -d
+
+-
+Check before: 
+cli-input:
+docker ps
+
+o/p:
+confluentinc/cp-zookeeper
+confluentinc/cp-kafka
+
+if not!, restart them by 
+docker-compose down
+docker-compose up -d
+-
+For starting application:
+npm run start:dev

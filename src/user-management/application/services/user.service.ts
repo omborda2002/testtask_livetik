@@ -1,18 +1,27 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { UserRepositoryPort } from '../../domain/ports/user-repository.port';
-import { RegisterUserDto } from '../dto/register-user.dto';
-import { LoginUserDto } from '../dto/login-user.dto';
-import { ChangePasswordDto } from '../dto/change-password.dto';
-import { User } from '../../domain/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
+import { Inject, Injectable } from '@nestjs/common';
+import { User } from '../../domain/entities/user.entity';
+import { UserRepositoryPort } from '../../domain/ports/user-repository.port';
+import { LoginUserDto } from '../dto/login-user.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
+import { ChangePasswordDto } from '../dto/change-password.dto';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('UserRepositoryPort')
     private readonly userRepository: UserRepositoryPort,
+
+    @Inject('KAFKA_CLIENT')
+    private readonly kafkaClient: ClientKafka,
   ) {}
+
+  async onModuleInit() {
+    this.kafkaClient.subscribeToResponseOf('user.events.auth');
+    await this.kafkaClient.connect();
+  }
 
   async registerUser(dto: RegisterUserDto): Promise<User> {
     const existing = await this.userRepository.findByEmail(dto.email);
@@ -44,5 +53,12 @@ export class UserService {
 
     user.passwordHash = await bcrypt.hash(dto.newPassword, 10);
     await this.userRepository.save(user);
+
+    // Emiting Kafka event
+    const event = {
+      userId: user.id,
+      timestamp: new Date().toISOString(),
+    };
+    this.kafkaClient.emit('user.events.auth', event);
   }
 }
