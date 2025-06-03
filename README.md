@@ -14,7 +14,11 @@ This is a **test project for LiveTik**.
 
 ## 🚀 Getting Started
 
-### 📦 Install Dependencies
+### 📦 Clone & Install Dependencies
+
+```bash
+git clone https://github.com/omborda2002/testtask_livetik
+```
 
 ```bash
 npm install
