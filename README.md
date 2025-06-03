@@ -1,119 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# LiveTik-testtask
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project demonstrates a **modular, event-driven monolithic architecture** using **NestJS** and **Apache Kafka**, with a focus on **hexagonal architecture** and **data sovereignty**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is a **test project for LiveTik**.
 
-## Description
+## 📦 Modules Implemented
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
+* **UserManagementModule**: Handles registration, login, and password change.
+* **AuditLogModule**: Listens to password change events and logs audit entries.
+* **SecurityDashboardModule**: Maintains and exposes the last password change timestamp per user, updated via Kafka events.
 
 ---
 
+## 🚀 Getting Started
+
+### 📦 Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 🐳 Kafka Setup Using Docker
+
+Ensure Docker is installed, then run:
+
+### ✅ Step 1: Create a `docker-compose.yml`
+
+```yaml
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+```
+
+### ✅ Step 2: Start Kafka
+
+```bash
 docker-compose up -d
+```
 
--
-Check before: 
-cli-input:
-docker ps
+---
 
-o/p:
-confluentinc/cp-zookeeper
-confluentinc/cp-kafka
+## 🧠 Project Structure (Hexagonal Architecture)
 
-if not!, restart them by 
-docker-compose down
-docker-compose up -d
--
-For starting application:
+```
+src/
+├── user-management/
+│   ├── application/        # Services and DTOs
+│   ├── domain/             # Entities and Ports
+│   ├── infrastructure/     # In-memory Adapters
+│   └── interfaces/         # Controllers
+│
+├── audit-log/              # Kafka consumer logging password changes
+├── security-dashboard/     # Maintains view of password change timestamps
+├── app.module.ts
+├── main.ts
+```
+
+---
+
+## 🧪 Running the App
+
+### ✅ Start NestJS Application
+
+```bash
 npm run start:dev
+```
+
+It connects to Kafka as both producer and consumer.
+
+### ✅ Available Endpoints
+
+| Endpoint                                        | Method | Description                              |
+| ----------------------------------------------- | ------ | ---------------------------------------- |
+| `/users/register`                               | POST   | Register new user                        |
+| `/users/login`                                  | POST   | Login user                               |
+| `/users/change-password`                        | POST   | Change user password (emits Kafka event) |
+| `/dashboard/users/:userId/last-password-change` | GET    | Get last password change timestamp       |
+
+---
+
+## 🧪 Run Tests
+
+### ✅ Unit Tests
+
+```bash
+npm run test
+```
+
+Includes tests for:
+
+* `UserService` (including Kafka event emission)
+* `AuditLogService` (Kafka listener logging)
+* `SecurityDashboardController` (event listener and HTTP endpoint)
+
+---
+
+## 📬 Postman Collection
+
+🔗 [Postman Collection Link](https://red-resonance-450635.postman.co/workspace/Personal-Workspace~f985e4e0-f03e-440c-9073-7365ff530f0a/collection/18233166-8d426034-0026-4c27-ba16-6c2b42b64dd6?action=share&creator=18233166&active-environment=18233166-299f1299-229f-44af-97f7-3702cafb0b07)
+
+---
+
+## 🗂 Additional Notes
+
+* Kafka topic used: `user.events.auth`
+* Uses in-memory data stores (no external DB)
+* PDF discussion document is attached in the email and inside the project's workspace.
+
+---
+
+## 👨‍💻 Author
+
+**Om Borda**
